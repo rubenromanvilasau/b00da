@@ -77,8 +77,8 @@ async function main(){
     console.log('-'.repeat(50));
     //** QUESTION NUMBER 3 */
     const budaCommission = 0.08;
-    const lostCommisions = thisYearTrades.trades.entries.reduce((acc, entry) => acc + Number(entry[2]) * budaCommission, 0);
-    console.log('Lost commisions', lostCommisions, convertToClp(lostCommisions));
+    const lostCommissions = totalCLP * budaCommission; 
+    console.log('Lost commisions', lostCommissions, convertToClp(lostCommissions));
     /**
      * Lost commissions are 475.912.202,76
      */
