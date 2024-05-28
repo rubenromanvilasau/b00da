@@ -28,7 +28,7 @@ const convertToClp = (num) => {
 
 
 //BTC-CLP
-// BTC se compra - CLP se paga
+//BTC se compra - CLP se paga
 async function main(){
 
     const [thisYearTrades, lastYearTrades] = await Promise.all([fetchThisYearTrades(), fetchLastYearTrades()])
@@ -58,25 +58,20 @@ async function main(){
     // console.log('lastYearFilteredTrades', lastYearFilteredTrades);
 
 
-    const totalBTCLastYear = lastYearFilteredTrades.reduce((acc, entry) => acc + Number(entry[1]),0);
-    console.log('Last Year BTC', totalBTCLastYear);
+    const btcTransactionsLastYear = lastYearFilteredTrades.length;
+    console.log('Last Year BTC transactions', btcTransactionsLastYear);
 
-    const totalBTCThisYear = filteredTradesThisYear.reduce((acc, entry) => acc + Number(entry[1]),0);
-    console.log('This year BTC', totalBTCThisYear);
+    const btcTransactionsThisYear = filteredTradesThisYear.length;
+    console.log('This year BTC', btcTransactionsThisYear);
     /**
      * Total BTC Transacted LAST year is 0.47857174
      * Total BTC Transacted THIS year is 0.7367471900000002
      */
 
+    const percentage = (btcTransactionsThisYear  - btcTransactionsLastYear)/btcTransactionsLastYear *100;
+    console.log('Percentage increased BTC', percentage.toFixed(2) + '%');
     /**
-     * 100% -> 0.47857174
-     * x -> 0.7367471900000002
-     */
-
-    const percentage = (totalBTCThisYear * 100) / totalBTCLastYear;
-    console.log('Percentage increased BTC', percentage);
-    /**
-    * The percentage increased by 53.94%
+    * The percentage increased by 194.12%
     */
 
     console.log('-'.repeat(50));
