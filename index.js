@@ -44,10 +44,10 @@ async function main(){
     console.log('-'.repeat(50));
     //** QUESTION NUMBER 1 */
     const filteredTradesThisYear = thisYearTrades.trades.entries.filter( entry => Number(entry[0]) >= startDateThisYear); //Filter entries where dates are greater than 01/03/2024 12:00pm
-    // console.log('trades', filteredTradesThisYear);
-
+    // console.log('filteredTradesThisYear', filteredTradesThisYear);
     
-    const totalCLP = filteredTradesThisYear.reduce((acc, entry) => acc + Number(entry[2]),0);
+    const totalCLP = filteredTradesThisYear.reduce((acc, entry) => acc + Number(entry[2]) * Number(entry[1]),0);
+    
     console.log('Total CLP', totalCLP);
     console.log('Formatted total in CLP', convertToClp(totalCLP));
     /**
