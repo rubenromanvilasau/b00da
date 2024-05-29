@@ -81,7 +81,8 @@ async function main(){
     //** QUESTION NUMBER 3 */
     const budaCommission = 0.08;
     const lostCommissions = totalCLP * budaCommission; 
-    console.log('Lost commisions', lostCommissions, convertToClp(lostCommissions));
+    console.log('Lost commisions', lostCommissions);
+    console.log('Formatted lost commisions', convertToClp(lostCommissions));
     /**
      * Lost commissions are 475.912.202,76
      */
