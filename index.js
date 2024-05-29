@@ -83,7 +83,7 @@ async function main(){
     console.log('Lost commisions', lostCommissions.toFixed(2));
     console.log('Formatted lost commisions', convertToClp(lostCommissions));
     /**
-     * Lost commissions are 475.912.202,76
+     * Lost commissions are 3511323.56
      */
 
     console.log('-'.repeat(50));
