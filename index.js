@@ -51,7 +51,7 @@ async function main(){
     console.log('Total CLP', totalCLP.toFixed(2));
     console.log('Formatted total in CLP', convertToClp(totalCLP));
     /**
-     * Total would be 5.948.902.534,61
+     * Total would be 43891544.55
      */
 
     console.log('-'.repeat(50));
