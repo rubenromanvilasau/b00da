@@ -11,13 +11,14 @@ output will be in console, like this:
 
 ```sh
 --------------------------------------------------
-Total CLP 5948902534.610001
-Formatted total in CLP $5.948.902.535
+Total CLP 43891544.55
+Formatted total in CLP $43.891.545
 --------------------------------------------------
-Last Year BTC transactions 34
-This year BTC 100
-Percentage increased BTC 194.12%
+Last Year BTC volume transactions 0.47857174
+This year BTC volume transactions 0.7367471900000002
+Percentage increased BTC 53.95%
 --------------------------------------------------
-Lost commisions 475912202.7688001 $475.912.203
+Lost commisions 3511323.56
+Formatted lost commisions $3.511.324
 --------------------------------------------------
 ```
