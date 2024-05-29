@@ -27,8 +27,10 @@ const convertToClp = (num) => {
 }
 
 
-//BTC-CLP
-//BTC se compra - CLP se paga
+/**
+ * Un factor importante a considerar en las respuestas es que la API limita la cantidad de trades que se pueden obtener a máximo 100 por request.
+ * por lo que los resultados están basados en lo anterior.
+ */
 async function main(){
 
     const [thisYearTrades, lastYearTrades] = await Promise.all([fetchThisYearTrades(), fetchLastYearTrades()])
@@ -37,6 +39,7 @@ async function main(){
                                                     return;
                                                 });
     // console.log('response', response);
+    if(!thisYearTrades || !lastYearTrades) return;
 
     console.log('-'.repeat(50));
     //** QUESTION NUMBER 1 */
