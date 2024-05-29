@@ -48,7 +48,7 @@ async function main(){
     
     const totalCLP = filteredTradesThisYear.reduce((acc, entry) => acc + Number(entry[2]) * Number(entry[1]),0);
     
-    console.log('Total CLP', totalCLP);
+    console.log('Total CLP', totalCLP.toFixed(2));
     console.log('Formatted total in CLP', convertToClp(totalCLP));
     /**
      * Total would be 5.948.902.534,61
@@ -60,28 +60,27 @@ async function main(){
     const lastYearFilteredTrades = lastYearTrades.trades.entries.filter( entry => Number(entry[0]) >= startDateLastYear); //Filter entries where dates are greater than 01/03/2023 12:00pm
     // console.log('lastYearFilteredTrades', lastYearFilteredTrades);
 
+    const btcTransactionsLastYear = lastYearFilteredTrades.reduce((acc, entry) => acc + Number(entry[1]),0);
+    console.log('Last Year BTC volume transactions', btcTransactionsLastYear);
 
-    const btcTransactionsLastYear = lastYearFilteredTrades.length;
-    console.log('Last Year BTC transactions', btcTransactionsLastYear);
-
-    const btcTransactionsThisYear = filteredTradesThisYear.length;
-    console.log('This year BTC transactions', btcTransactionsThisYear);
+    const btcTransactionsThisYear = filteredTradesThisYear.reduce((acc, entry) => acc + Number(entry[1]),0);
+    console.log('This year BTC volume transactions', btcTransactionsThisYear);
     /**
-     * Total BTC transactions LAST year is 34
-     * Total BTC transactions THIS year is 100
+     * Total BTC transactions LAST year is 0.47857174
+     * Total BTC transactions THIS year is 0.7367471900000002
      */
 
     const percentage = (btcTransactionsThisYear  - btcTransactionsLastYear)/btcTransactionsLastYear *100;
     console.log('Percentage increased BTC', percentage.toFixed(2) + '%');
     /**
-    * The percentage increased by 194.12%
+    * The percentage increased by 53.95%
     */
 
     console.log('-'.repeat(50));
     //** QUESTION NUMBER 3 */
     const budaCommission = 0.08;
     const lostCommissions = totalCLP * budaCommission; 
-    console.log('Lost commisions', lostCommissions);
+    console.log('Lost commisions', lostCommissions.toFixed(2));
     console.log('Formatted lost commisions', convertToClp(lostCommissions));
     /**
      * Lost commissions are 475.912.202,76
