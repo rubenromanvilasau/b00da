@@ -65,10 +65,10 @@ async function main(){
     console.log('Last Year BTC transactions', btcTransactionsLastYear);
 
     const btcTransactionsThisYear = filteredTradesThisYear.length;
-    console.log('This year BTC', btcTransactionsThisYear);
+    console.log('This year BTC transactions', btcTransactionsThisYear);
     /**
-     * Total BTC Transacted LAST year is 0.47857174
-     * Total BTC Transacted THIS year is 0.7367471900000002
+     * Total BTC transactions LAST year is 34
+     * Total BTC transactions THIS year is 100
      */
 
     const percentage = (btcTransactionsThisYear  - btcTransactionsLastYear)/btcTransactionsLastYear *100;
