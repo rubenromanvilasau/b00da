@@ -1,26 +1,43 @@
 'use client';
-import {DatePicker} from "@nextui-org/date-picker";
-import { useState } from "react";
+import { DatePicker } from "@nextui-org/date-picker";
 import { DateValue } from "@nextui-org/react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { parseDate } from "@internationalized/date";
+import { useEffect, useState } from "react";
+import { convertToDateValue } from "@/lib/utils";
 
-export default function StartCalendarInput() {
+export default function StartCalendarInput({ defaultDate }: { defaultDate: Date }) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
-    const { replace } = useRouter();
+    const { replace } = useRouter()
+    const [currentDate, setCurrentDate] = useState<DateValue>();
 
     const isDateUnavailable = (date: any) => {
         return date.day !== 1
     }
 
     const onChangeDate = (date: DateValue) => {
-        const parsedDate = new Date(date.year, date.month - 1, date.day).getTime();
+        const parsedDate = new Date(date.year, date.month, date.day).getTime();
         const params = new URLSearchParams(searchParams);
         date
             ? params.set('start', parsedDate.toString())
             : params.delete('start');
         replace(`${pathname}?${params.toString()}`);
+        setCurrentDate(date);
     }
+
+    useEffect(() => {
+        const params = new URLSearchParams(searchParams);
+        if (params.has('start')) {
+            const date = new Date(Number(params.get('start')));
+            const parsedDate = parseDate(date.toISOString().split('T')[0]);
+            setCurrentDate(parsedDate);
+        }else{
+            defaultDate.setDate(1);
+            const parsedDate = parseDate(defaultDate.toISOString().split('T')[0]);
+            setCurrentDate(parsedDate);
+        }
+    }, []);
 
     return(
         <div>
@@ -29,7 +46,8 @@ export default function StartCalendarInput() {
                 name="start_date"
                 aria-label="Fecha de inicio de inversión"
                 onChange={onChangeDate}
-                // variant="underlined"
+                value={currentDate}
+                // defaultValue={getDefaultValue()}
                 isDateUnavailable={isDateUnavailable}
                 className="text-white mt-2"
             />

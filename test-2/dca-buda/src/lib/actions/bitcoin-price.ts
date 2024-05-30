@@ -1,49 +1,38 @@
 import { Trade } from "@/types";
-import { convertToCLP } from "../utils";
 import { getDifferenceInMonths } from '../utils/index';
 
+interface Data {
+    transactionTimestamp: number;
+    btcPrice: number;
+    profit: number;
+    accumulatedProfit: number;
+    totalAccumulated: number;
+    btcPriceChangePercent: number;
+    accumulatedInvestment: number;
+};
+
 /**
- * Get bitcoin prices within a range of dates
+ * Generate different indifcators for the given amount of money, startDate and endDate.
  * @param date - Unix timestamp
  */
-export async function getChartData(amount: number, startDate: number, endDate: number) {
-    if(!amount) return [];
+export async function getChartData(amount: number, startDate: number, endDate: number): Promise<Data[]> {
+    const now = new Date().getTime();
+    if(startDate > now || !amount) return []; 
     
-    const parsedStartDate = new Date(startDate);
-    parsedStartDate.setHours(9);
-    console.log('parsedStartDate', parsedStartDate);
+    const parsedStartDate = resetToUTC(new Date(startDate));
+    const parsedEndDate = resetToUTC(new Date(endDate));
 
-    const parsedEndDate = new Date(endDate);
-    parsedEndDate.setHours(9);
-    console.log('endDate', parsedEndDate);
+    const dates = generateDates(parsedStartDate, parsedEndDate);
+    const prices = await fetchBitcoinPrices(dates);
 
-    // Create an array of dates in unix from startDate to endDate
-    const months = getDifferenceInMonths(parsedEndDate, parsedStartDate);
-    const dates: Number[] = [];
-    for(let i = 0; i <=  months; i++) {
-        const date = new Date(parsedStartDate.getFullYear(), parsedStartDate.getMonth() + i, 1, 9);
-        if(date <= new Date() ) {
-            const unixDate = date.getTime();
-            dates.push(unixDate);
-        }
-    }
+    const data = calculateIndicators(prices, amount);
 
-    let investmentAccumulated = 0;
-    const prices = await Promise.all(dates.map(async (date: any) => {
-        const data = await getBitcoinPrice(date);
-        
-        const btcPrice = Number(data.entries[0][2]);
-        investmentAccumulated += amount;
-        return {
-            date,
-            parsedDate: new Date(date),
-            transactionTimestamp: data.entries[0][0],
-            btcPrice,
-            investmentAccumulated,
-        }
-    }));
+    return data;
+}
 
+const calculateIndicators = (prices: any[], amount: number) => {
     const data = [];
+    let accumulatedInvestment = amount;
     for(let i = 0; i < prices.length; i++) {
         if(i !== 0) {
             const newProfit = amount / prices[i-1].btcPrice * prices[i].btcPrice - amount;
@@ -53,8 +42,9 @@ export async function getChartData(amount: number, startDate: number, endDate: n
                 ...prices[i],
                 profit: newProfit,
                 accumulatedProfit,
-                totalAccumulated: accumulatedProfit + prices[i].investmentAccumulated,
+                totalAccumulated: accumulatedProfit + accumulatedInvestment,
                 btcPriceChangePercent: (prices[i].btcPrice - prices[i-1].btcPrice) / prices[i-1].btcPrice * 100,
+                accumulatedInvestment,
             };
         }else{
             data[i] = {
@@ -62,15 +52,57 @@ export async function getChartData(amount: number, startDate: number, endDate: n
                 profit: 0,
                 accumulatedProfit: 0,
                 totalAccumulated: 0,
-                btcPriceChangePercent: 0
+                btcPriceChangePercent: 0,
+                accumulatedInvestment
             };
         }
+        accumulatedInvestment += amount;
     }
     
     // console.log('data', data);
 
     return data;
+}
 
+const fetchBitcoinPrices = async(dates: number[]): Promise<{transactionTimestamp: number; btcPrice: number}[]> => {
+    
+    const prices = await Promise.all(dates.map(async (date: any) => {
+        const data = await getBitcoinPrice(date);
+        
+        const btcPrice = Number(data.entries[0][2]);
+        const transactionTimestamp = Number(data.entries[0][0]);
+        return {
+            transactionTimestamp,
+            btcPrice,
+        }
+    }));
+
+    return prices;
+}
+
+const generateDates = (startDate: Date, endDate: Date): number[] => {
+    const months = getDifferenceInMonths(endDate, startDate);
+    const dates: number[] = [];
+    console.log('months', months);
+    console.log('STARTDATE', startDate);
+    for(let i = 0; i <=  months; i++) {
+        console.log('startdae', startDate);
+        
+        if(startDate <= new Date()) {
+            const unixDate = startDate.getTime();
+            console.log('unix', unixDate)
+            dates.push(unixDate);
+        }
+        startDate.setMonth(startDate.getMonth() + 1);
+    }
+
+    return dates;
+}
+
+const resetToUTC = (date: Date): Date => {
+    date.setUTCDate(1);
+    date.setUTCHours(12, 0, 0, 0);
+    return date;
 }
 
 /**

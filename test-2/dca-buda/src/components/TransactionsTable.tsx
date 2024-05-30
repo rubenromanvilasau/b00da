@@ -4,11 +4,9 @@ export default function TransactionsTable({
     transactions
 }: {
     transactions: {
-        date: number;
-        parsedDate: Date;
-        transactionTimestamp: string;
+        transactionTimestamp: number;
         btcPrice: number;
-        investmentAccumulated: number;
+        accumulatedInvestment: number;
         profit: number;
         totalAccumulated: number;
         accumulatedProfit: number;
@@ -32,10 +30,10 @@ export default function TransactionsTable({
                     </tr>
                 </thead>
                 <tbody className="">
-                    { transactions && transactions.map(({ parsedDate, btcPrice, investmentAccumulated, profit, accumulatedProfit, totalAccumulated, btcPriceChangePercent }, index) => (
+                    { transactions && transactions.map(({ transactionTimestamp, btcPrice, accumulatedInvestment, profit, accumulatedProfit, totalAccumulated, btcPriceChangePercent }, index) => (
                         <tr key={index} className="odd:bg-slate-900">
-                            <td className="text-secondary py-4">{formatDate(parsedDate)}</td>
-                            <td className="text-secondary py-4 text-">{convertToCLP(investmentAccumulated)}</td>
+                            <td className="text-secondary py-4">{formatDate(new Date(transactionTimestamp))}</td>
+                            <td className="text-secondary py-4 text-">{convertToCLP(accumulatedInvestment)}</td>
                             <td className="text-secondary py-4">{convertToCLP(btcPrice)}</td>
                             <td className={`${profit >= 0 ? 'text-green-600' : 'text-red-600'} py-4`}>{convertToCLP(profit)}</td>
                             <td className="text-secondary py-4">{convertToCLP(accumulatedProfit)}</td>
