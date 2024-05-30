@@ -1,38 +1,76 @@
 import { Trade } from "@/types";
+import { convertToCLP } from "../utils";
+import { getDifferenceInMonths } from '../utils/index';
 
 /**
  * Get bitcoin prices within a range of dates
  * @param date - Unix timestamp
  */
-export async function getBitcoinPrices(startDate: number, endDate?: number) {
+export async function getChartData(amount: number, startDate: number, endDate: number) {
+    if(!amount) return [];
+    
     const parsedStartDate = new Date(startDate);
+    parsedStartDate.setHours(9);
+    console.log('parsedStartDate', parsedStartDate);
 
-    if(endDate && endDate > Date.now()) {
-        const now = new Date();
-        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1, 12);
-        endDate = firstDay.getTime();
-        console.log('endDate', new Date(endDate));
-    }
+    const parsedEndDate = new Date(endDate);
+    parsedEndDate.setHours(9);
+    console.log('endDate', parsedEndDate);
 
-    // Create an array of dates in unix from startDate to 12 months later
+    // Create an array of dates in unix from startDate to endDate
+    const months = getDifferenceInMonths(parsedEndDate, parsedStartDate);
     const dates: Number[] = [];
-    for(let i = 1; i <= 12; i++) {
-        const date = new Date(parsedStartDate.getFullYear(), parsedStartDate.getMonth() + i, 1, 8);
-        console.log('date', date);
-
-        const unixDate = date.getTime();
-        dates.push(unixDate);
+    for(let i = 0; i <=  months; i++) {
+        const date = new Date(parsedStartDate.getFullYear(), parsedStartDate.getMonth() + i, 1, 9);
+        if(date <= new Date() ) {
+            const unixDate = date.getTime();
+            dates.push(unixDate);
+        }
     }
 
-    const firstMonthDay = 1714564800000; // 1 de mayo 2024 (este mes)
-
-    await Promise.all(dates.map(async (date) => {
+    let investmentAccumulated = 0;
+    const prices = await Promise.all(dates.map(async (date: any) => {
         const data = await getBitcoinPrice(date);
-        console.log('btc price', {
+        
+        const btcPrice = Number(data.entries[0][2]);
+        investmentAccumulated += amount;
+        return {
             date,
-            price: data.entries[0][2]
-        });
+            parsedDate: new Date(date),
+            transactionTimestamp: data.entries[0][0],
+            btcPrice,
+            investmentAccumulated,
+        }
     }));
+
+    const data = [];
+    for(let i = 0; i < prices.length; i++) {
+        if(i !== 0) {
+            const newProfit = amount / prices[i-1].btcPrice * prices[i].btcPrice - amount;
+            const accumulatedProfit: number = data[i-1].accumulatedProfit + newProfit;       
+    
+            data[i] = {
+                ...prices[i],
+                profit: newProfit,
+                accumulatedProfit,
+                totalAccumulated: accumulatedProfit + prices[i].investmentAccumulated,
+                btcPriceChangePercent: (prices[i].btcPrice - prices[i-1].btcPrice) / prices[i-1].btcPrice * 100,
+            };
+        }else{
+            data[i] = {
+                ...prices[i],
+                profit: 0,
+                accumulatedProfit: 0,
+                totalAccumulated: 0,
+                btcPriceChangePercent: 0
+            };
+        }
+    }
+    
+    // console.log('data', data);
+
+    return data;
+
 }
 
 /**
