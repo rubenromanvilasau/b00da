@@ -23,4 +23,5 @@ docker compose up
 App will run on production mode.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Project is also deployed in Vercel, this domain: https://b00da.vercel.app/
 
