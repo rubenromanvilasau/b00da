@@ -48,6 +48,7 @@ export default function EndCalendarInput({ defaultDate }: { defaultDate: Date })
                 value={currentDate}
                 isDateUnavailable={isDateUnavailable}
                 className="text-white mt-2"
+                maxValue={parseDate(new Date().toISOString().split('T')[0])}
             />
         </div>
     )

@@ -2,9 +2,11 @@
 import { Line } from "react-chartjs-2";
 import { Tooltip, CategoryScale, Chart as ChartJS, Legend, LineElement, LinearScale, PointElement, Title } from 'chart.js';
 import { convertToCLP } from "@/lib/utils";
+import { useRef } from "react";
 
 const options = {
     responsive: true,
+    maintainAspectRatio: false,
     color: 'white',
     plugins: {
         legend: {
@@ -59,34 +61,35 @@ export default function Chart({
     datasets: any[]
 }) {
 
+    const chartRef = useRef(null);
+
     const data = {
         labels,
         datasets: [
             {
-                label: 'Profits',
-                data: datasets && datasets.map((dataset) => convertToCLP(dataset.profit)),
+                label: 'Invertido',
+                data: datasets && datasets.map((dataset) => Number(dataset.accumulatedInvestment.toFixed(0))),
                 borderColor: '#4D4DFE',
                 backgroundColor: '#4D4DFE',
             },
             {
                 label: 'Total acumulado',
-                data: datasets && datasets.map((dataset) => dataset.totalAccumulated),
-                borderColor: '#4D4DFE',
-                backgroundColor: '#4D4DFE',
+                data: datasets && datasets.map((dataset) => Number(dataset.totalAccumulated.toFixed(0))),
+                borderColor: '#0EBEB2',
+                backgroundColor: '#0EBEB2',
+            },
+            {
+                label: 'Ganancias',
+                data: datasets && datasets.map((dataset) => Number(dataset.profit.toFixed(0))),
+                borderColor: '#fe8e22',
+                backgroundColor: '#fe8e22',
             }
         ],
-
-        // [
-            // {
-                // label: 'Dataset 1',
-                // data: [1,2,3,4,5,6,7],
-                // borderColor: '#4D4DFE',
-                // backgroundColor: '#4D4DFE',
-            // },
-        // ],
     };
 
     return (
-        <Line options={options} data={data}/>
+        <div className="w-[99%] min-h-[400px]">
+            <Line ref={chartRef} options={options} data={data}/>
+        </div>
     );
 };

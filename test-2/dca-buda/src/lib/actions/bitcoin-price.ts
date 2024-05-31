@@ -83,14 +83,11 @@ const fetchBitcoinPrices = async(dates: number[]): Promise<{transactionTimestamp
 const generateDates = (startDate: Date, endDate: Date): number[] => {
     const months = getDifferenceInMonths(endDate, startDate);
     const dates: number[] = [];
-    console.log('months', months);
-    console.log('STARTDATE', startDate);
+    
     for(let i = 0; i <=  months; i++) {
-        console.log('startdae', startDate);
         
         if(startDate <= new Date()) {
             const unixDate = startDate.getTime();
-            console.log('unix', unixDate)
             dates.push(unixDate);
         }
         startDate.setMonth(startDate.getMonth() + 1);

@@ -15,9 +15,9 @@ export default function TransactionsTable({
 }) {
     
     return(
-        <div className="mt-8 w-full">
+        <div className="mt-8 w-full overflow-x-auto">
             <h2 className="text-quaternary text-2xl">Transacciones</h2>
-            <table className="w-full mt-2">
+            <table className="w-full mt-2 table-auto">
                 <thead>
                     <tr>
                         <th className="font-medium text-start text-lg">Fecha</th>

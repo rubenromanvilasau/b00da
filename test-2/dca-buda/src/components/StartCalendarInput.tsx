@@ -4,7 +4,6 @@ import { DateValue } from "@nextui-org/react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { parseDate } from "@internationalized/date";
 import { useEffect, useState } from "react";
-import { convertToDateValue } from "@/lib/utils";
 
 export default function StartCalendarInput({ defaultDate }: { defaultDate: Date }) {
     const searchParams = useSearchParams();
@@ -17,7 +16,7 @@ export default function StartCalendarInput({ defaultDate }: { defaultDate: Date 
     }
 
     const onChangeDate = (date: DateValue) => {
-        const parsedDate = new Date(date.year, date.month, date.day).getTime();
+        const parsedDate = new Date(date.year, date.month -1, date.day).getTime();
         const params = new URLSearchParams(searchParams);
         date
             ? params.set('start', parsedDate.toString())

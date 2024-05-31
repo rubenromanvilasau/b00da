@@ -8,6 +8,7 @@ import { convertToCLP, formatDate } from '@/lib/utils';
 import Chart from '@/components/Chart';
 
 const twelveMonthsAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 30 * 12).getTime();
+
 export default async function Home({
     searchParams,
 }:{
@@ -48,9 +49,7 @@ export default async function Home({
                     <StartCalendarInput defaultDate={new Date(startDate)}/>
                     <EndCalendarInput defaultDate={new Date(endDate)}/>
                 </div>
-                <div className="max-h-[500px] w-full">
-                    <Chart datasets={data} labels={data.map(data => formatDate(new Date(data.transactionTimestamp), 'dd/MM/yy'))}/>
-                </div>
+                <Chart datasets={data} labels={data.map(data => formatDate(new Date(data.transactionTimestamp), 'dd/MM/yy'))}/>
             </div>
 
             <TransactionsTable transactions={data}/>
