@@ -109,7 +109,7 @@ const resetToUTC = (date: Date): Date => {
 const getBitcoinPrice = async (date: Number): Promise<Trade> => {
     const url = `https://www.buda.com/api/v2/markets/BTC-CLP/trades?timestamp=${date}&limit=1`;
     return fetch(url)
-        .then(response => response.json())
-        .then( ({ trades }) => trades)
-        .catch(err => console.log(err));
+        .then((response: any) => response.json())
+        .then( ({ trades }: { trades: any}) => trades)
+        .catch((err: any) => console.log(err));
 }

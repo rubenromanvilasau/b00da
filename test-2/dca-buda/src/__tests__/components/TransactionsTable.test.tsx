@@ -1,7 +1,7 @@
 // TransactionsTable.test.js
 import React from 'react';
 import { render } from '@testing-library/react';
-import TransactionsTable from '../../components/TransactionsTable';
+import TransactionsTable from '@/components/TransactionsTable';
 
 
 describe('TransactionsTable component', () => {

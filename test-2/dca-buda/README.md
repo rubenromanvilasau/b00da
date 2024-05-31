@@ -2,6 +2,11 @@
 
 ## Getting Started
 
+App was created using Node v21.6.0, there's a .nvmrc in root, so you can do nvm use if you got v21.6.0 installed.
+```bash
+nvm use
+```
+
 First, run the development server:
 
 ```bash

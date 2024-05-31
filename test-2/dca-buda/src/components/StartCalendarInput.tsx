@@ -46,7 +46,6 @@ export default function StartCalendarInput({ defaultDate }: { defaultDate: Date 
                 aria-label="Fecha de inicio de inversión"
                 onChange={onChangeDate}
                 value={currentDate}
-                // defaultValue={getDefaultValue()}
                 isDateUnavailable={isDateUnavailable}
                 className="text-white mt-2"
             />

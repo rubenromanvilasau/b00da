@@ -11,7 +11,7 @@ export default function IndicatorCard({
 }) {
     
     return(
-        <div className="rounded-xl border-2 border-quaternary p-4">
+        <div className="rounded-xl border-2 border-quaternary p-4 w-full md:w-fit">
             <div className="flex items-center gap-4">
                 {type === 'invested' && <FaExchangeAlt size={24} className="text-white"/>}
                 {type === 'profits' && <AiOutlineStock size={24} className="text-white"/>}

@@ -16,12 +16,14 @@ export default function AmountInput({ currency, defaultValue }: { currency: stri
 
     return(
         <div>
-            <label htmlFor="amount" className="text-tertiary">Amount</label>
+            <label htmlFor="amount" className="text-tertiary">Monto</label>
             <div className="rounded-xl border-2 border-secondary p-4 flex items-center justify-between mt-2">
                 <input 
                     type="number" 
+                    id="amount"
+                    min={0}
                     name="amount" 
-                    placeholder="Amount" 
+                    placeholder="Monto" 
                     className="outline-none bg-transparent focus:outline-none"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInput(e.target.value)}
                     defaultValue={searchParams.get('amount')?.toString() || defaultValue}

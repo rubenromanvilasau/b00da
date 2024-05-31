@@ -24,7 +24,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={poppins.className}>
-                <NextUIProvider>
+                <NextUIProvider locale="es-CL">
                     <Topbar/>
                     {children}
                 </NextUIProvider>
