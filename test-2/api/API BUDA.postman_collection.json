@@ -1,0 +1,79 @@
+{
+	"info": {
+		"_postman_id": "9a55c73e-795a-4855-b343-39f11336a2f9",
+		"name": "API BUDA",
+		"description": "Buda collection of APIs developed for test 1.\n\nBy Ruben Roman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34853921"
+	},
+	"item": [
+		{
+			"name": "Get all markets spreads",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/markets/spreads",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"markets",
+						"spreads"
+					]
+				},
+				"description": "returns al markets spreads. An object array containing all markets and spread value.\n\n``` javascript\n[\n    {\n        market: {...},\n        spread: 0.12.\n    }\n]\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Get especific market spread",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/markets/btc-clp/spread",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"markets",
+						"btc-clp",
+						"spread"
+					]
+				},
+				"description": "Get especific market spread given a market id through parameter. It returns an object containing the market, some info about it, and spread value\n\nmarketId must be a Buda market.\n\n```\n{\n    market: {...},\n    spread: 0.12.\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Get spread polling",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/markets/spread/changes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"markets",
+						"spread",
+						"changes"
+					]
+				},
+				"description": "Get spread change, currently working only on BTC-CLP Buda market, it returns an object containing lastSpread and currentSpread, that value is updated every 60 seconds.\n\n```\n{\n    lastSpread: 100000,\n    currentSpread: 3450.\n}\n\n ```"
+			},
+			"response": []
+		}
+	]
+}

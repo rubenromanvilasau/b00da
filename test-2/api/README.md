@@ -2,6 +2,8 @@
 
 ## Getting started
 
+Documentation of the API is in file 'API BUDA.postman_collection.json', that file has the requests with each route and it's short documentation. You can import it with Postman to test app. 
+
 To run in development mode just 
 ```bash
 npm run dev
