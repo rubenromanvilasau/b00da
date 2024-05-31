@@ -25,6 +25,7 @@ export default function StartCalendarInput({ defaultDate }: { defaultDate: Date 
         setCurrentDate(date);
     }
 
+    // Set the current date to the one in the URL if it exists, otherwise set it to the default date prop
     useEffect(() => {
         const params = new URLSearchParams(searchParams);
         if (params.has('start')) {

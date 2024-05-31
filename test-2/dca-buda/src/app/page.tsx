@@ -23,7 +23,6 @@ export default async function Home({
     const endDate = Number(searchParams?.end) || Date.now();
 
     const data = await getChartData(amount, startDate, endDate);
-    // console.log('data', data);
     
     const totalProfit = data?.reduce( (a,b) => a + b.profit, 0) || 0;
     const profitPercent = data?.reduce( (a,b) => a + b.btcPriceChangePercent, 0) || 0;

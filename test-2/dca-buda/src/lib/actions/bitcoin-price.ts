@@ -59,8 +59,6 @@ const calculateIndicators = (prices: any[], amount: number) => {
         accumulatedInvestment += amount;
     }
     
-    // console.log('data', data);
-
     return data;
 }
 

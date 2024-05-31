@@ -1,8 +1,6 @@
 'use client';
 import { Line } from "react-chartjs-2";
 import { Tooltip, CategoryScale, Chart as ChartJS, Legend, LineElement, LinearScale, PointElement, Title } from 'chart.js';
-import { convertToCLP } from "@/lib/utils";
-import { useRef } from "react";
 
 const options = {
     responsive: true,
@@ -13,7 +11,6 @@ const options = {
             position: 'top' as const,
             labels: {
                 font: {
-                // family: 'Poppins'
                 }
             }
         },
@@ -22,7 +19,6 @@ const options = {
         x: {
             border: {
                 dash: [1,10],
-                // borderColor: 'red',
             },
             grid: {
                 color: '#e5e7eb',
@@ -34,7 +30,6 @@ const options = {
             },
             grid: {
                 display: false,
-                // color: '#58a',
                 tickLenght: 1,
                 drawTicks: true,
             }
@@ -51,7 +46,6 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-// const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
 export default function Chart({
     datasets,
@@ -60,8 +54,6 @@ export default function Chart({
     labels: string[],
     datasets: any[]
 }) {
-
-    const chartRef = useRef(null);
 
     const data = {
         labels,
@@ -89,7 +81,7 @@ export default function Chart({
 
     return (
         <div className="w-[99%] min-h-[400px]">
-            <Line ref={chartRef} options={options} data={data}/>
+            <Line options={options} data={data}/>
         </div>
     );
 };

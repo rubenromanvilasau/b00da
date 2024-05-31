@@ -4,6 +4,13 @@
 
 Documentation of the API is in file 'API BUDA.postman_collection.json', that file has the requests with each route and it's short documentation. You can import it with Postman to test app. 
 
+## Tech
+Node js 
+Express
+Axios
+Dotenv 
+Jest
+
 To run in development mode just 
 ```bash
 npm run dev
@@ -21,5 +28,3 @@ so just do
 docker build -t api-buda .
 docker run -p 4000:4000 --name api-buda
 ``` 
-App will run on production mode.
-
