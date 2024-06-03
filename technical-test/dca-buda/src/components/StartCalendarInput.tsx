@@ -34,6 +34,7 @@ export default function StartCalendarInput({ defaultDate }: { defaultDate: Date 
             setCurrentDate(parsedDate);
         }else{
             defaultDate.setDate(1);
+            defaultDate.setHours(12,0,0,0);
             const parsedDate = parseDate(defaultDate.toISOString().split('T')[0]);
             setCurrentDate(parsedDate);
         }
